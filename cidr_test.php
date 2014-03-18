@@ -6,7 +6,7 @@ This simple tool tests whether a given IPv4 address is within a specified CIDR n
 @package cidr_test
 @author Jesse Smith for Mardesco, with help!
 @license Triple-licensed under MIT/GPL/"nobody cares"
-@version 0.0.2
+@version 0.1.1
 @TODO Add an input form, so the user won't have to edit the source code every time they want to use the tool.
 @TODO Make the function IPv6 compatible.
 */
@@ -20,10 +20,27 @@ This simple tool tests whether a given IPv4 address is within a specified CIDR n
 <h1>CIDR Test</h1>
 <?php
 
-// enter the IP you are checking:
-$ipToTest = '127.0.0.1';
-// enter the CIDR you are testing it against:
-$cidrToTest = '127.0.0.0/8';
+if(isset($_GET['submit'])){
+
+	$options = array(
+	'options' => array(
+	'default' => 'Invalid input.'
+	),
+	'flags' => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH
+	);
+	
+	if(isset($_GET['ip'])){
+		$ipToTest = filter_var($_GET['ip'], FILTER_SANITIZE_STRING, $options);	
+	}else{
+		die("missing required input.");
+	}
+	
+
+	if(isset($_GET['cidr'])){
+		$cidrToTest = filter_var($_GET['cidr'], FILTER_SANITIZE_STRING, $options);	
+	}else{
+		die("missing required input.");
+	}
 
 
 // the crucial logic is courtesy of user "claudiu at cnix dot com"
@@ -50,6 +67,19 @@ $found = ipCIDRCheck ($ipToTest, $cidrToTest);
 
 echo $found ?  '<p>Yes, it is.</p>' : '<p>No, it&#039;s not.</p>';
 
+}
+
 ?>
+
+	<form action="" method="get">
+	
+	<p><label for="ip">Enter the IP address: <input type="text" name="ip" /></label></p>
+	
+	<p><label for="cidr">Enter the CIDR: <input type="text" name="cidr" /></label></p>	
+	
+	<p><input type="submit" name="submit" value="Submit" /></p>
+	
+	</form>
+
 </body>
 </html>
