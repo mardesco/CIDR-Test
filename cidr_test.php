@@ -6,8 +6,7 @@ This simple tool tests whether a given IPv4 address is within a specified CIDR n
 @package cidr_test
 @author Jesse Smith for Mardesco, with help!
 @license Triple-licensed under MIT/GPL/"nobody cares"
-@version 0.1.1
-@TODO Add an input form, so the user won't have to edit the source code every time they want to use the tool.
+@version 0.1.2
 @TODO Make the function IPv6 compatible.
 */
 ?>
